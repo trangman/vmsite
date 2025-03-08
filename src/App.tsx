@@ -146,8 +146,8 @@ function Hero() {
             >
               <input type="hidden" name="form-name" value="contact" />
               
-              <div className="flex flex-col gap-3 sm:gap-4 w-full sm:max-w-md">
-                <div className="form-group">
+              <div className="flex flex-col gap-3 sm:gap-4 w-full max-w-md">
+                <div className="form-group w-full">
                   <label htmlFor="name" className="sr-only">Name</label>
                   <input
                     id="name"
@@ -156,13 +156,13 @@ function Hero() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Enter your name"
-                    className="flex-1 px-4 sm:px-6 py-3 sm:py-4 rounded-lg border-none bg-white focus:outline-none focus:ring-2 focus:ring-[#00B2C8] text-base sm:text-lg"
+                    className="w-full px-6 sm:px-8 py-3 sm:py-4 rounded-lg border-none bg-white focus:outline-none focus:ring-2 focus:ring-[#00B2C8] text-base sm:text-lg shadow-lg"
                     required
                     aria-required="true"
                   />
                 </div>
                 
-                <div className="form-group">
+                <div className="form-group w-full">
                   <label htmlFor="email" className="sr-only">Email</label>
                   <input
                     id="email"
@@ -171,20 +171,20 @@ function Hero() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your email"
-                    className="flex-1 px-4 sm:px-6 py-3 sm:py-4 rounded-lg border-none bg-white focus:outline-none focus:ring-2 focus:ring-[#00B2C8] text-base sm:text-lg"
+                    className="w-full px-6 sm:px-8 py-3 sm:py-4 rounded-lg border-none bg-white focus:outline-none focus:ring-2 focus:ring-[#00B2C8] text-base sm:text-lg shadow-lg"
                     required
                     aria-required="true"
                   />
                 </div>
                 
                 {error && (
-                  <div className="text-red-600 text-sm mt-1" role="alert" aria-live="assertive">{error}</div>
+                  <div className="text-red-600 text-sm mt-1 w-full" role="alert" aria-live="assertive">{error}</div>
                 )}
                 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`bg-[#1E0B4B] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg flex items-center justify-center gap-2 hover:bg-[#2d1171] transition-colors text-base sm:text-lg font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1E0B4B] ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                  className={`w-full px-6 sm:px-8 py-3 sm:py-4 rounded-lg flex items-center justify-center gap-2 bg-[#1E0B4B] text-white hover:bg-[#2d1171] transition-colors text-base sm:text-lg font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1E0B4B] ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
                   aria-busy={isSubmitting}
                 >
                   {isSubmitting ? 'Submitting...' : 'Sign Up'} {!isSubmitting && <ArrowRight className="h-5 w-5" aria-hidden="true" />}
