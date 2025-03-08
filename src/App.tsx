@@ -8,10 +8,43 @@ import PrivacyPolicy from './PrivacyPolicy';
 
 function Hero() {
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Signup with:', email);
+    setIsSubmitting(true);
+    setError('');
+    
+    try {
+      // Create form data for submission
+      const formData = new FormData();
+      formData.append('form-name', 'contact');
+      formData.append('name', name);
+      formData.append('email', email);
+      
+      // Submit the form data to Netlify
+      const response = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData as any).toString(),
+      });
+      
+      if (response.ok) {
+        setIsSubmitted(true);
+        setName('');
+        setEmail('');
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (err) {
+      console.error('Error submitting form:', err);
+      setError('There was a problem submitting your information. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -97,23 +130,55 @@ function Hero() {
             Sign up to receive our exclusive investment memorandum with detailed information about our latest opportunities in Thailand's emerging markets and luxury developments.
           </p>
           
-          <form onSubmit={handleSubmit} className="w-full">
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:max-w-md">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-                className="flex-1 px-4 sm:px-6 py-3 sm:py-4 rounded-lg border-none bg-white focus:outline-none focus:ring-2 focus:ring-[#00B2C8] text-base sm:text-lg"
-              />
-              <button
-                type="submit"
-                className="bg-[#1E0B4B] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg flex items-center justify-center gap-2 hover:bg-[#2d1171] transition-colors text-base sm:text-lg font-medium"
-              >
-                Sign Up <ArrowRight className="h-5 w-5" />
-              </button>
+          {isSubmitted ? (
+            <div className="bg-green-50 border border-green-200 text-green-800 rounded-lg p-6 mb-6">
+              <h3 className="text-lg font-semibold mb-2">Thank You!</h3>
+              <p>Your information has been submitted successfully. We'll be in touch with you shortly.</p>
             </div>
-          </form>
+          ) : (
+            <form 
+              onSubmit={handleSubmit} 
+              className="w-full"
+              data-netlify="true"
+              name="contact"
+              method="POST"
+            >
+              <input type="hidden" name="form-name" value="contact" />
+              
+              <div className="flex flex-col gap-3 sm:gap-4 w-full sm:max-w-md">
+                <input
+                  type="text"
+                  name="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Enter your name"
+                  className="flex-1 px-4 sm:px-6 py-3 sm:py-4 rounded-lg border-none bg-white focus:outline-none focus:ring-2 focus:ring-[#00B2C8] text-base sm:text-lg"
+                  required
+                />
+                <input
+                  type="email"
+                  name="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  className="flex-1 px-4 sm:px-6 py-3 sm:py-4 rounded-lg border-none bg-white focus:outline-none focus:ring-2 focus:ring-[#00B2C8] text-base sm:text-lg"
+                  required
+                />
+                
+                {error && (
+                  <div className="text-red-600 text-sm mt-1">{error}</div>
+                )}
+                
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`bg-[#1E0B4B] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg flex items-center justify-center gap-2 hover:bg-[#2d1171] transition-colors text-base sm:text-lg font-medium ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                >
+                  {isSubmitting ? 'Submitting...' : 'Sign Up'} {!isSubmitting && <ArrowRight className="h-5 w-5" />}
+                </button>
+              </div>
+            </form>
+          )}
         </div>
       </div>
     </div>

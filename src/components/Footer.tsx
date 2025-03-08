@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function Footer() {
   const currentYear = new Date().getFullYear();
@@ -12,8 +13,8 @@ function Footer() {
           </div>
           
           <div className="flex space-x-4 sm:space-x-6">
-            <a href="/privacy-policy" className="text-xs sm:text-sm text-white/70 hover:text-white">Privacy Policy</a>
-            <a href="/disclaimer" className="text-xs sm:text-sm text-white/70 hover:text-white">Disclaimer</a>
+            <Link to="/privacy-policy" className="text-xs sm:text-sm text-white/70 hover:text-white">Privacy Policy</Link>
+            <Link to="/disclaimer" className="text-xs sm:text-sm text-white/70 hover:text-white">Disclaimer</Link>
           </div>
         </div>
       </div>
