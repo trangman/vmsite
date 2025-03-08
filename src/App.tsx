@@ -131,7 +131,7 @@ function Hero() {
           </p>
           
           {isSubmitted ? (
-            <div className="bg-green-50 border border-green-200 text-green-800 rounded-lg p-6 mb-6">
+            <div className="bg-green-50 border border-green-200 text-green-800 rounded-lg p-6 mb-6" role="alert" aria-live="polite">
               <h3 className="text-lg font-semibold mb-2">Thank You!</h3>
               <p>Your information has been submitted successfully. We'll be in touch with you shortly.</p>
             </div>
@@ -142,39 +142,52 @@ function Hero() {
               data-netlify="true"
               name="contact"
               method="POST"
+              aria-label="Signup Form"
             >
               <input type="hidden" name="form-name" value="contact" />
               
               <div className="flex flex-col gap-3 sm:gap-4 w-full sm:max-w-md">
-                <input
-                  type="text"
-                  name="name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Enter your name"
-                  className="flex-1 px-4 sm:px-6 py-3 sm:py-4 rounded-lg border-none bg-white focus:outline-none focus:ring-2 focus:ring-[#00B2C8] text-base sm:text-lg"
-                  required
-                />
-                <input
-                  type="email"
-                  name="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email"
-                  className="flex-1 px-4 sm:px-6 py-3 sm:py-4 rounded-lg border-none bg-white focus:outline-none focus:ring-2 focus:ring-[#00B2C8] text-base sm:text-lg"
-                  required
-                />
+                <div className="form-group">
+                  <label htmlFor="name" className="sr-only">Name</label>
+                  <input
+                    id="name"
+                    type="text"
+                    name="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Enter your name"
+                    className="flex-1 px-4 sm:px-6 py-3 sm:py-4 rounded-lg border-none bg-white focus:outline-none focus:ring-2 focus:ring-[#00B2C8] text-base sm:text-lg"
+                    required
+                    aria-required="true"
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <label htmlFor="email" className="sr-only">Email</label>
+                  <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    className="flex-1 px-4 sm:px-6 py-3 sm:py-4 rounded-lg border-none bg-white focus:outline-none focus:ring-2 focus:ring-[#00B2C8] text-base sm:text-lg"
+                    required
+                    aria-required="true"
+                  />
+                </div>
                 
                 {error && (
-                  <div className="text-red-600 text-sm mt-1">{error}</div>
+                  <div className="text-red-600 text-sm mt-1" role="alert" aria-live="assertive">{error}</div>
                 )}
                 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`bg-[#1E0B4B] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg flex items-center justify-center gap-2 hover:bg-[#2d1171] transition-colors text-base sm:text-lg font-medium ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                  className={`bg-[#1E0B4B] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg flex items-center justify-center gap-2 hover:bg-[#2d1171] transition-colors text-base sm:text-lg font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1E0B4B] ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                  aria-busy={isSubmitting}
                 >
-                  {isSubmitting ? 'Submitting...' : 'Sign Up'} {!isSubmitting && <ArrowRight className="h-5 w-5" />}
+                  {isSubmitting ? 'Submitting...' : 'Sign Up'} {!isSubmitting && <ArrowRight className="h-5 w-5" aria-hidden="true" />}
                 </button>
               </div>
             </form>
@@ -228,7 +241,7 @@ function HomePage() {
   return (
     <div className="min-h-screen">
       <Header />
-      <main>
+      <main id="main" tabIndex={-1}>
         <Hero />
         <Partners />
       </main>
