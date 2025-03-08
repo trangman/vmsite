@@ -14,11 +14,6 @@ function Header() {
               />
             </a>
           </div>
-          <nav className="hidden md:flex space-x-8">
-            <a href="/" className="text-white hover:text-white/80 text-sm font-medium">Home</a>
-            <a href="/disclaimer" className="text-white/70 hover:text-white text-sm font-medium">Disclaimer</a>
-            <a href="/privacy-policy" className="text-white/70 hover:text-white text-sm font-medium">Privacy Policy</a>
-          </nav>
         </div>
       </div>
     </header>
