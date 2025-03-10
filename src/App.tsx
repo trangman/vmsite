@@ -55,9 +55,31 @@ function Hero() {
         style={{
           clipPath: 'polygon(30% 0, 100% 0, 100% 100%, 30% 100%, 0 50%)',
           background: 'linear-gradient(135deg, #00B2C8 0%, #1E0B4B 100%)',
-          opacity: '0.9'
+          opacity: '0.9',
+          zIndex: 1 // Keep gradient below content
         }}
       />
+      
+      {/* Mobile-specific styles to ensure images don't appear on small screens */}
+      <style>
+        {`
+          @media (max-width: 767px) {
+            img[src*="koh-nangyuan-viewpoint-thailand.webp"],
+            img[src*="amazing-tropical-landscape-with-thai-traditional-boats.webp"] {
+              display: none !important;
+              visibility: hidden !important;
+              opacity: 0 !important;
+              pointer-events: none !important;
+            }
+            
+            /* Ensure form elements are above any background elements */
+            input, button, form {
+              position: relative !important;
+              z-index: 50 !important;
+            }
+          }
+        `}
+      </style>
       
       {/* Bottom-right beach image - responsive sizing */}
       <div 
@@ -120,7 +142,7 @@ function Hero() {
       
       {/* Left content section - responsive */}
       <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-32 md:pt-40 lg:pt-52 pb-16 sm:pb-20">
-        <div className="w-full md:max-w-xl lg:max-w-2xl" style={{ marginTop: '5vh', marginBottom: '5vh' }}>
+        <div className="w-full md:max-w-xl lg:max-w-2xl" style={{ marginTop: '5vh', marginBottom: '5vh', position: 'relative', zIndex: 30 }}>
           <h1 className="text-left mb-4 sm:mb-6 md:mb-8">
             <span className="block text-[#00B2C8] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-1 sm:mb-2">Venture</span>
             <span className="block text-[#00B2C8] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-1 sm:mb-2">Management</span>
@@ -157,6 +179,7 @@ function Hero() {
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Enter your name"
                     className="w-full px-6 sm:px-8 py-3 sm:py-4 rounded-lg border-none bg-white focus:outline-none focus:ring-2 focus:ring-[#00B2C8] text-base sm:text-lg shadow-lg"
+                    style={{ position: 'relative', zIndex: 30 }}
                     required
                     aria-required="true"
                   />
@@ -172,6 +195,7 @@ function Hero() {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your email"
                     className="w-full px-6 sm:px-8 py-3 sm:py-4 rounded-lg border-none bg-white focus:outline-none focus:ring-2 focus:ring-[#00B2C8] text-base sm:text-lg shadow-lg"
+                    style={{ position: 'relative', zIndex: 30 }}
                     required
                     aria-required="true"
                   />
@@ -184,7 +208,8 @@ function Hero() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`w-full px-6 sm:px-8 py-3 sm:py-4 rounded-lg flex items-center justify-center gap-2 bg-[#1E0B4B] text-white hover:bg-[#2d1171] transition-colors text-base sm:text-lg font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1E0B4B] ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                  className={`w-full px-6 sm:px-8 py-3 sm:py-4 rounded-lg flex items-center justify-center gap-2 bg-[#1E0B4B] text-white hover:bg-[#2d1171] transition-colors text-base sm:text-lg font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1E0B4B] relative z-30 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                  style={{ position: 'relative', zIndex: 30 }}
                   aria-busy={isSubmitting}
                 >
                   {isSubmitting ? 'Submitting...' : 'Sign Up'} {!isSubmitting && <ArrowRight className="h-5 w-5" aria-hidden="true" />}
